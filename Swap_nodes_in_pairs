@@ -1,0 +1,35 @@
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return head;
+        }
+        
+        // Create a dummy node to simplify edge cases
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        
+        ListNode* prev = dummy;  // This will point to the node before the current pair
+        ListNode* current = head;
+        
+        while (current != nullptr && current->next != nullptr) {
+            // Nodes to be swapped
+            ListNode* first = current;
+            ListNode* second = current->next;
+            
+            // Swap the nodes
+            first->next = second->next;
+            second->next = first;
+            prev->next = second;
+            
+            // Move the pointers forward for the next swap
+            prev = first;
+            current = first->next;
+        }
+        
+        // The new head is the next node of the dummy
+        ListNode* newHead = dummy->next;
+        delete dummy;  // Clean up the dummy node
+        return newHead;
+    }
+};
